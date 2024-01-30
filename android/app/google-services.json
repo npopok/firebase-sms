@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "824820941137",
+    "project_id": "fir-sms-783b3",
+    "storage_bucket": "fir-sms-783b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824820941137:android:453c678b10d96969279370",
+        "android_client_info": {
+          "package_name": "com.example.firebase_sms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu83RsMCQhFKqj_XEcLM3WQOhY5FhakC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

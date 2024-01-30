@@ -1,1 +1,17 @@
-{}
+{
+    "RegistrationScreen.Title1": "Регистрация",
+    "RegistrationScreen.Title2": "Подтверждение",
+    "RegistrationScreen.PhonePrompt": "Введите номер телефона для регистрации",
+    "RegistrationScreen.PhoneLabel": "Номер телефона",
+    "RegistrationScreen.PhoneHint": "+7 ",
+    "RegistrationScreen.PhoneMask": "+7 (###) ### ## ##",
+    "RegistrationScreen.SendButton": "Отправить смс-код",
+    "RegistrationScreen.ConsentText1": "Нажимая на данную кнопку, вы даете согласие на обработку ",
+    "RegistrationScreen.ConsentText2": "персональных данных",
+    "RegistrationScreen.CodeHint": "Введите код, который мы отправили в SMS на {}",
+    "RegistrationScreen.SecondsLeft": "{} сек до повтора отправки кода",
+    "RegistrationScreen.SendAgain": "Отправить код еще раз",
+    "RegistrationScreen.InvalidPhone": "Неверный номер телефона",
+    "RegistrationScreen.InvalidCode": "Неверный СМС код.",
+    "ServerError": "Ошибка сервера. Попробуйте позже."
+}
