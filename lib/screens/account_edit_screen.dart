@@ -33,13 +33,14 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text(widget.title)),
-      ),
-      body: TextFormField(
-        focusNode: focusNode,
-        initialValue: widget.value,
-        onFieldSubmitted: (value) => context.pop(value),
+      appBar: AppBar(title: Text(widget.title)),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
+        child: TextFormField(
+          focusNode: focusNode,
+          initialValue: widget.value,
+          onFieldSubmitted: (value) => context.pop(value),
+        ),
       ),
     );
   }

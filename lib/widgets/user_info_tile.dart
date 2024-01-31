@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class UserInfoTile extends StatelessWidget {
+  static const arrowColor = Color(0xFFC6C6C8);
+
   final String leading;
   final String title;
   final VoidCallback? onTap;
@@ -16,7 +18,10 @@ class UserInfoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(leading),
+      leading: Text(
+        leading,
+        style: Theme.of(context).textTheme.headlineMedium,
+      ),
       title: title.isNotEmpty
           ? Text(
               title,
@@ -25,8 +30,12 @@ class UserInfoTile extends StatelessWidget {
           : Text(
               'AccountScreen.EditField'.tr(),
               textAlign: TextAlign.right,
+              style: Theme.of(context).textTheme.labelLarge,
             ),
-      trailing: const Icon(Icons.arrow_forward_ios),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        color: arrowColor,
+      ),
       onTap: onTap,
     );
   }

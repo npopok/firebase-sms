@@ -18,23 +18,27 @@ class _NavbarScreenState extends State<NavbarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.child,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentTab,
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.grid_view),
-            label: 'HomeScreen.ProjectsTab'.tr(),
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.person),
-            label: 'HomeScreen.AccountTab'.tr(),
-          ),
-        ],
-        onDestinationSelected: (value) {
-          if (value == 0) context.go('/projects');
-          if (value == 1) context.push('/account');
-          setState(() => currentTab = value);
-        },
+      bottomNavigationBar: SizedBox(
+        height: 75,
+        child: BottomNavigationBar(
+          iconSize: 20,
+          currentIndex: currentTab,
+          items: [
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.grid_view),
+              label: 'HomeScreen.ProjectsTab'.tr(),
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.person),
+              label: 'HomeScreen.AccountTab'.tr(),
+            ),
+          ],
+          onTap: (value) {
+            if (value != currentTab && value == 0) context.go('/projects');
+            if (value != currentTab && value == 1) context.push('/account');
+            setState(() => currentTab = value);
+          },
+        ),
       ),
     );
   }

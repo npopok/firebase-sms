@@ -2,9 +2,14 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserAvatar extends StatefulWidget {
+  static const backgroundColor = Color(0xFFE3E3E3);
+  static const iconColor = Color(0xFF0098EE);
+  static const bottomTextColor = Color(0XFF0098EE);
+
   final String initialValue;
 
   const UserAvatar({required this.initialValue, super.key});
@@ -19,21 +24,41 @@ class _UserAvatarState extends State<UserAvatar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 90,
+      width: 130,
       height: 90,
       child: Stack(
         children: [
-          CircleAvatar(
-            radius: 38,
-            child: imageFile == null
-                ? const Icon(Icons.person, size: 48)
-                : Image.file(File(imageFile!)),
+          Align(
+            alignment: Alignment.center,
+            child: CircleAvatar(
+              backgroundColor: UserAvatar.backgroundColor,
+              radius: 38,
+              foregroundImage:
+                  imageFile == null ? null : Image.file(File(imageFile!), fit: BoxFit.cover).image,
+              child: const Icon(
+                Icons.person,
+                size: 60,
+                color: UserAvatar.iconColor,
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.bottomRight,
-            child: OutlinedButton(
-              onPressed: () => _selectImageHandler(context),
-              child: const Icon(Icons.more_horiz),
+            child: SizedBox(
+              height: 32,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                  shape: const CircleBorder(),
+                  side: BorderSide.none,
+                ),
+                onPressed: () => _selectImageHandler(context),
+                child: const Icon(
+                  Icons.more_horiz,
+                  size: 32,
+                  color: UserAvatar.iconColor,
+                ),
+              ),
             ),
           ),
         ],
@@ -48,10 +73,15 @@ class _UserAvatarState extends State<UserAvatar> {
         return ListView(
           shrinkWrap: true,
           children: [
-            ListTile(
-              title: Text(
-                'AccountScreen.SelectPhoto'.tr(),
-                textAlign: TextAlign.center,
+            SizedBox(
+              height: 40,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'AccountScreen.SelectPhoto'.tr(),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
               ),
             ),
             const Divider(),
@@ -59,16 +89,22 @@ class _UserAvatarState extends State<UserAvatar> {
               title: Text(
                 'AccountScreen.Camera'.tr(),
                 textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                      color: UserAvatar.bottomTextColor,
+                    ),
               ),
-              onTap: () => _pickImage(ImageSource.camera),
+              onTap: () => _pickImage(context, ImageSource.camera),
             ),
             const Divider(),
             ListTile(
               title: Text(
                 'AccountScreen.Gallery'.tr(),
                 textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                      color: UserAvatar.bottomTextColor,
+                    ),
               ),
-              onTap: () => _pickImage(ImageSource.gallery),
+              onTap: () => _pickImage(context, ImageSource.gallery),
             ),
           ],
         );
@@ -76,10 +112,11 @@ class _UserAvatarState extends State<UserAvatar> {
     );
   }
 
-  void _pickImage(ImageSource source) async {
+  void _pickImage(BuildContext context, ImageSource source) async {
     final file = await ImagePicker().pickImage(source: source);
     if (file != null) {
       setState(() => imageFile = file.path);
+      if (context.mounted) context.pop();
     }
   }
 }

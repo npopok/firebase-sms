@@ -46,49 +46,54 @@ class _AccountScreenState extends State<AccountScreen> {
 
   Widget _buildBody(BuildContext context, AccountInfo accountInfo) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        const SizedBox(height: 24),
         UserAvatar(initialValue: accountInfo.imageFile),
         const SizedBox(height: 12),
-        Text(accountInfo.email),
-        ListView(
-          shrinkWrap: true,
-          children: [
-            UserInfoTile(
-              leading: 'AccountScreen.FirstName'.tr(),
-              title: accountInfo.firstName,
-              onTap: () => _editFieldHandler(
-                context,
-                'AccountScreen.FirstName'.tr(),
-                accountInfo.firstName,
-                (value) => accountBloc.add(
-                  AccountInfoUpdate(accountInfo.copyWith(firstName: value)),
+        Text(
+          accountInfo.email,
+          style: Theme.of(context).textTheme.labelMedium,
+        ),
+        const SizedBox(height: 24),
+        Card(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              UserInfoTile(
+                leading: 'AccountScreen.FirstName'.tr(),
+                title: accountInfo.firstName,
+                onTap: () => _editFieldHandler(
+                  context,
+                  'AccountScreen.FirstName'.tr(),
+                  accountInfo.firstName,
+                  (value) => accountBloc.add(
+                    AccountInfoUpdate(accountInfo.copyWith(firstName: value)),
+                  ),
                 ),
               ),
-            ),
-            UserInfoTile(
-              leading: 'AccountScreen.LastName'.tr(),
-              title: accountInfo.lastName,
-              onTap: () => _editFieldHandler(
-                context,
-                'AccountScreen.LastName'.tr(),
-                accountInfo.lastName,
-                (value) => accountBloc.add(
-                  AccountInfoUpdate(accountInfo.copyWith(lastName: value)),
+              const Divider(),
+              UserInfoTile(
+                leading: 'AccountScreen.LastName'.tr(),
+                title: accountInfo.lastName,
+                onTap: () => _editFieldHandler(
+                  context,
+                  'AccountScreen.LastName'.tr(),
+                  accountInfo.lastName,
+                  (value) => accountBloc.add(
+                    AccountInfoUpdate(accountInfo.copyWith(lastName: value)),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
   }
 
   void _editFieldHandler(
-    BuildContext context,
-    String title,
-    String value,
-    Function(String) onSaved,
-  ) {
+      BuildContext context, String title, String value, Function(String) onSaved) {
     context
         .push('/account/account_edit?title=$title&value=$value')
         .then((value) => value != null ? onSaved(value as String) : 0);
