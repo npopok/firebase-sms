@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ProjectsScreen extends StatelessWidget {
@@ -5,6 +6,10 @@ class ProjectsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Text('ProjectsScreen.Placeholder'.tr()),
+      ),
+    );
   }
 }

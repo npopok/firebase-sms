@@ -141,7 +141,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         Text('RegistrationScreen.CodeHint'.tr(args: [phoneNumber!])),
         Pinput(
-          length: 6,
+          length: 6, // Has to be 6 due to Firebase constraints in test mode
           onCompleted: (value) => _signInWithCode(value),
         ),
         Visibility(

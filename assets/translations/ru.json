@@ -13,5 +13,15 @@
     "RegistrationScreen.SendAgain": "Отправить код еще раз",
     "RegistrationScreen.InvalidPhone": "Неверный номер телефона",
     "RegistrationScreen.InvalidCode": "Неверный СМС код.",
+    "HomeScreen.ProjectsTab": "Мои проекты",
+    "HomeScreen.AccountTab": "Мой аккаунт",
+    "ProjectsScreen.Placeholder": "Мои проекты",
+    "AccountScreen.Title": "Мой аккаунт",
+    "AccountScreen.SelectPhoto": "Выберите фото",
+    "AccountScreen.Camera": "Камера",
+    "AccountScreen.Gallery": "Галерея Фото",
+    "AccountScreen.FirstName": "Имя",
+    "AccountScreen.LastName": "Фамилия",
+    "AccountScreen.EditField": "Настроить",
     "ServerError": "Ошибка сервера. Попробуйте позже."
 }
