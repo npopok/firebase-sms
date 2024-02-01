@@ -11,8 +11,13 @@ class UserAvatar extends StatefulWidget {
   static const bottomTextColor = Color(0XFF0098EE);
 
   final String initialValue;
+  final Function(String) onSaved;
 
-  const UserAvatar({required this.initialValue, super.key});
+  const UserAvatar({
+    required this.initialValue,
+    required this.onSaved,
+    super.key,
+  });
 
   @override
   State<UserAvatar> createState() => _UserAvatarState();
@@ -20,6 +25,12 @@ class UserAvatar extends StatefulWidget {
 
 class _UserAvatarState extends State<UserAvatar> {
   String? imageFile;
+
+  @override
+  void initState() {
+    imageFile = widget.initialValue;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +100,7 @@ class _UserAvatarState extends State<UserAvatar> {
               title: Text(
                 'AccountScreen.Camera'.tr(),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: UserAvatar.bottomTextColor,
                     ),
               ),
@@ -100,7 +111,7 @@ class _UserAvatarState extends State<UserAvatar> {
               title: Text(
                 'AccountScreen.Gallery'.tr(),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: UserAvatar.bottomTextColor,
                     ),
               ),
@@ -117,6 +128,7 @@ class _UserAvatarState extends State<UserAvatar> {
     if (file != null) {
       setState(() => imageFile = file.path);
       if (context.mounted) context.pop();
+      widget.onSaved(imageFile!);
     }
   }
 }

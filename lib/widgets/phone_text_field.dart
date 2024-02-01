@@ -5,6 +5,7 @@ class PhoneTextField extends StatefulWidget {
   final String label;
   final String hint;
   final String mask;
+  final String errorText;
 
   final void Function(String?)? onSaved;
 
@@ -12,6 +13,7 @@ class PhoneTextField extends StatefulWidget {
     required this.label,
     required this.hint,
     required this.mask,
+    required this.errorText,
     this.onSaved,
     super.key,
   });
@@ -21,29 +23,32 @@ class PhoneTextField extends StatefulWidget {
 }
 
 class _PhoneTextFieldState extends State<PhoneTextField> {
-  TextEditingController controller = TextEditingController();
   FocusNode focusNode = FocusNode();
 
   String? validateText(String value) {
-    return RegExp(r'^\+7\s\(\d\d\d\)\s\d\d\d\s\d\d\s\d\d$').hasMatch(value) ? null : '';
+    return RegExp(r'^\+7\s\(\d\d\d\)\s\d\d\d\s\d\d\s\d\d$').hasMatch(value)
+        ? null
+        : widget.errorText;
   }
 
   @override
   void initState() {
-    // focusNode.addListener(() {
-    //   if (!focusNode.hasFocus) {
-    //     validateText();
-    //     setState(() {});
-    //   }
-    // });
+    focusNode.addListener(() {
+      // Call validation on losing focus
+      if (!focusNode.hasFocus) setState(() {});
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      //  controller: controller,
-      focusNode: focusNode,
       keyboardType: TextInputType.phone,
       inputFormatters: [
         MaskTextInputFormatter(
@@ -58,6 +63,11 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
       ),
       validator: (value) => validateText(value!),
       onSaved: widget.onSaved,
+      onChanged: (value) {
+        if (value.length == widget.mask.length) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      },
     );
   }
 }

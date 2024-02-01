@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class AccountEditScreen extends StatefulWidget {
   final String title;
   final String value;
+  final int maxLength;
 
   const AccountEditScreen({
     required this.title,
     required this.value,
+    required this.maxLength,
     super.key,
   });
 
@@ -37,6 +40,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
         child: TextFormField(
+          inputFormatters: [LengthLimitingTextInputFormatter(widget.maxLength)],
           focusNode: focusNode,
           initialValue: widget.value,
           onFieldSubmitted: (value) => context.pop(value),

@@ -8,7 +8,7 @@ class AppRouter {
   static final shellNavigatorKey = GlobalKey<NavigatorState>();
 
   static GoRouter instance = GoRouter(
-    initialLocation: '/projects',
+    initialLocation: '/registration',
     navigatorKey: rootNavigatorKey,
     routes: [
       GoRoute(
@@ -42,6 +42,7 @@ class AppRouter {
                   builder: (_, state) => AccountEditScreen(
                     title: state.uri.queryParameters['title']!,
                     value: state.uri.queryParameters['value']!,
+                    maxLength: 50,
                   ),
                 ),
               ]),

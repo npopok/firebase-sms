@@ -35,7 +35,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
           ],
           onTap: (value) {
             if (value != currentTab && value == 0) context.go('/projects');
-            if (value != currentTab && value == 1) context.push('/account');
+            if (value != currentTab && value == 1) context.go('/account');
             setState(() => currentTab = value);
           },
         ),

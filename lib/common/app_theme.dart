@@ -13,6 +13,11 @@ abstract class Styles {
           elevation: 0,
         ),
         textTheme: const TextTheme(
+          labelSmall: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF4F4F4F),
+          ),
           labelMedium: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w500,
@@ -29,9 +34,19 @@ abstract class Styles {
             color: Color(0xFF4D4D4D),
           ),
           headlineLarge: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w400,
+            fontSize: 34,
+            fontWeight: FontWeight.w700,
             color: Color(0xFF4D4D4D),
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFF4F4F4F),
+          ),
+          bodyLarge: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFF4F4F4F),
           ),
         ),
         cardTheme: const CardTheme(
@@ -40,9 +55,19 @@ abstract class Styles {
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: const Color(0xFFFDFDFD),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(13),
             borderSide: BorderSide.none,
+          ),
+          errorStyle: const TextStyle(color: Colors.red),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFA7A7A7),
+            foregroundColor: const Color(0xFF4F4F4F),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
         ),
       );

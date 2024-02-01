@@ -13,7 +13,7 @@ class AccountInfo {
 
   AccountInfo.empty()
       : imageFile = '',
-        email = 'test@test.com',
+        email = '',
         firstName = '',
         lastName = '';
 

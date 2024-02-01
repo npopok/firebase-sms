@@ -1,20 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:firebase_sms/models/models.dart';
+import 'package:firebase_sms/repositories/repositories.dart';
 
 part 'account_info_event.dart';
 part 'account_info_state.dart';
 
 class AccountInfoBloc extends Bloc<AccountInfoEvent, AccountInfoState> {
-  AccountInfo accountInfo = AccountInfo.empty();
+  final AccountRepository repository;
 
-  AccountInfoBloc() : super(AccountInfoInitial()) {
-    on<AccountInfoLoad>((event, emit) {
-      emit(AccountInfoLoaded(accountInfo));
+  AccountInfoBloc(this.repository) : super(AccountInfoInitial()) {
+    on<AccountInfoGet>((event, emit) {
+      emit(AccountInfoGot(repository.getData()));
     });
     on<AccountInfoUpdate>((event, emit) {
-      accountInfo = event.accountInfo;
-      emit(AccountInfoUpdated(accountInfo));
+      repository.updateData(event.accountInfo);
+      emit(AccountInfoUpdated(event.accountInfo));
     });
   }
 }

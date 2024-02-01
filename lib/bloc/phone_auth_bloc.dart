@@ -23,6 +23,7 @@ class PhoneAuthBloc extends Bloc<PhoneAuthEvent, PhoneAuthState> {
     required this.ticker,
   }) : super(PhoneAuthInitial()) {
     on<PhoneAuthReset>((event, emit) {
+      _stopTicker();
       emit(PhoneAuthInitial());
     });
     on<PhoneAuthTicker>((event, emit) {
@@ -58,6 +59,7 @@ class PhoneAuthBloc extends Bloc<PhoneAuthEvent, PhoneAuthState> {
           smsCode: event.smsCode,
         );
         await FirebaseAuth.instance.signInWithCredential(credential);
+        _stopTicker();
         emit(PhoneAuthSucceeded());
       } catch (e) {
         emit(PhoneAuthInvalidCode());
@@ -77,5 +79,9 @@ class PhoneAuthBloc extends Bloc<PhoneAuthEvent, PhoneAuthState> {
           (left) => add(PhoneAuthTicker(left)),
         );
     add(PhoneAuthTicker(codeTimeout));
+  }
+
+  void _stopTicker() {
+    tickerSubscription?.cancel();
   }
 }

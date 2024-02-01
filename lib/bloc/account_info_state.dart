@@ -4,9 +4,9 @@ class AccountInfoState {}
 
 class AccountInfoInitial extends AccountInfoState {}
 
-class AccountInfoLoaded extends AccountInfoState {
+class AccountInfoGot extends AccountInfoState {
   AccountInfo accountInfo;
-  AccountInfoLoaded(this.accountInfo);
+  AccountInfoGot(this.accountInfo);
 }
 
 class AccountInfoUpdated extends AccountInfoState {

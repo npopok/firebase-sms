@@ -1,11 +1,10 @@
-import 'package:firebase_sms/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:firebase_sms/bloc/bloc.dart';
 import 'package:firebase_sms/models/models.dart';
+import 'package:firebase_sms/widgets/widgets.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -15,24 +14,23 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final accountBloc = AccountInfoBloc();
-
-  @override
-  void initState() {
-    accountBloc.add(AccountInfoLoad());
-    super.initState();
-  }
+  AccountInfoBloc getBloc(BuildContext context) => BlocProvider.of<AccountInfoBloc>(context);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AccountScreen.Title'.tr()),
+        title: Center(
+          child: Text('AccountScreen.Title'.tr()),
+        ),
       ),
       body: BlocBuilder<AccountInfoBloc, AccountInfoState>(
-        bloc: accountBloc,
+        bloc: getBloc(context),
         builder: (context, state) {
-          if (state is AccountInfoLoaded) {
+          if (state is AccountInfoInitial) {
+            getBloc(context).add(AccountInfoGet());
+          }
+          if (state is AccountInfoGot) {
             return _buildBody(context, state.accountInfo);
           }
           if (state is AccountInfoUpdated) {
@@ -45,57 +43,36 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Widget _buildBody(BuildContext context, AccountInfo accountInfo) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(height: 24),
-        UserAvatar(initialValue: accountInfo.imageFile),
-        const SizedBox(height: 12),
-        Text(
-          accountInfo.email,
-          style: Theme.of(context).textTheme.labelMedium,
-        ),
-        const SizedBox(height: 24),
-        Card(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              UserInfoTile(
-                leading: 'AccountScreen.FirstName'.tr(),
-                title: accountInfo.firstName,
-                onTap: () => _editFieldHandler(
-                  context,
-                  'AccountScreen.FirstName'.tr(),
-                  accountInfo.firstName,
-                  (value) => accountBloc.add(
-                    AccountInfoUpdate(accountInfo.copyWith(firstName: value)),
-                  ),
-                ),
-              ),
-              const Divider(),
-              UserInfoTile(
-                leading: 'AccountScreen.LastName'.tr(),
-                title: accountInfo.lastName,
-                onTap: () => _editFieldHandler(
-                  context,
-                  'AccountScreen.LastName'.tr(),
-                  accountInfo.lastName,
-                  (value) => accountBloc.add(
-                    AccountInfoUpdate(accountInfo.copyWith(lastName: value)),
-                  ),
-                ),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 16),
+          UserAvatar(
+            initialValue: accountInfo.imageFile,
+            onSaved: (value) => getBloc(context).add(
+              AccountInfoUpdate(accountInfo.copyWith(imageFile: value)),
+            ),
           ),
-        ),
-      ],
+          const SizedBox(height: 12),
+          Text(
+            accountInfo.email,
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+          const SizedBox(height: 24),
+          UserInfoCard(
+            firstName: accountInfo.firstName,
+            lastName: accountInfo.lastName,
+            onSavedFirstName: (value) => getBloc(context).add(
+              AccountInfoUpdate(accountInfo.copyWith(firstName: value)),
+            ),
+            onSavedLastName: (value) => getBloc(context).add(
+              AccountInfoUpdate(accountInfo.copyWith(lastName: value)),
+            ),
+          ),
+        ],
+      ),
     );
-  }
-
-  void _editFieldHandler(
-      BuildContext context, String title, String value, Function(String) onSaved) {
-    context
-        .push('/account/account_edit?title=$title&value=$value')
-        .then((value) => value != null ? onSaved(value as String) : 0);
   }
 }
